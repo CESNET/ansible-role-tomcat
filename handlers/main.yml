@@ -16,4 +16,3 @@
     state: restarted
     name: apache2
   listen: "restart apache"
-
