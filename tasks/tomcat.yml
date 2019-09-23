@@ -1,0 +1,76 @@
+---
+- name: "require Debian 10"
+  assert:
+    that:
+      - ansible_distribution == "Debian"
+      - ansible_distribution_major_version == "10"
+    msg: "Only Debian 10 is supported"
+
+- name: "install tomcat"
+  apt:
+    name:
+      - tomcat9
+    state: present
+
+- name: "disable log compression"
+  lineinfile:
+    path: /etc/cron.daily/tomcat9
+    regexp: '^LOGFILE_COMPRESS='
+    line:   'LOGFILE_COMPRESS=0'
+
+- name: "set up AJP connector in server.xml"
+  copy:
+    dest: /etc/tomcat9/server.xml
+    src: server.xml
+  notify: "restart tomcat"
+
+- name: "disable session persistence across Tomcat restarts"
+  copy:
+    dest: /etc/tomcat9/context.xml
+    content: |
+      <?xml version="1.0" encoding="UTF-8"?>
+      <Context>
+          <WatchedResource>WEB-INF/web.xml</WatchedResource>
+          <WatchedResource>WEB-INF/tomcat-web.xml</WatchedResource>
+          <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
+          <Manager pathname="" />
+      </Context>
+
+- name: "install apache"
+  apt:
+    name:
+      - apache2
+    state: present
+
+- name: "Enable AJP Apache module"
+  apache2_module:
+    name: proxy_ajp
+    state: present
+  notify:
+    - "restart apache"
+
+- name: "create tomcat systemd service override dir"
+  file:
+    path: /etc/systemd/system/tomcat9.service.d
+    state: directory
+
+- name: "check readonly dirs"
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop: "{{ tomcat_readonly_paths }}"
+
+- name: "check readwrite dirs"
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop: "{{ tomcat_readwrite_paths }}"
+
+
+- name: "enable system tomcat to write outside of normal dirs"
+  template:
+    dest: "/etc/systemd/system/tomcat9.service.d/override.conf"
+    src: override.conf.j2
+  notify:
+    - "reload systemd"
+    - "restart tomcat"

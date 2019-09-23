@@ -1,0 +1,19 @@
+---
+# handlers file for tomcat
+- name: "reload systemd"
+  systemd:
+    daemon_reload: yes
+  listen: "reload systemd"
+
+- name: "restart system Tomcat"
+  service:
+    state: restarted
+    name: tomcat9
+  listen: "restart tomcat"
+
+- name: "restart Apache"
+  service:
+    state: restarted
+    name: apache2
+  listen: "restart apache"
+
