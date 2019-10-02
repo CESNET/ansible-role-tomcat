@@ -70,7 +70,7 @@
 - name: "enable system tomcat to write outside of normal dirs"
   template:
     dest: "/etc/systemd/system/tomcat9.service.d/override.conf"
-    src: override.conf.j2
+    src: "{{ tomcat_override_template }}"
   notify:
     - "reload systemd"
     - "restart tomcat"

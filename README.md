@@ -14,7 +14,9 @@ Role Variables
 --------------
 - tomcat_readonly_paths - list of directories outside of webapp folder where applications can read
 - tomcat_readwrite_paths - list of directories outside of webapp folder where applications can read and write
-
+- tomcat_override_template - name of template for generating systemd service override file, default is "override.conf.j2"
+- tomcat_service_user - user owning the tomcat process, default is  "tomcat"
+- tomcat_service_group - group owning the tomcat process, default is "tomcat"
 Example Playbook
 ----------------
 ```yaml
@@ -28,4 +30,6 @@ Example Playbook
         tomcat_readwrite_paths:
           - "/var/log/perun"
           - "/var/log/oidc"
+        tomcat_service_user: "tomcat"
+        tomcat_service_group: "perun"
 ```

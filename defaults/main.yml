@@ -1,3 +1,6 @@
 ---
 tomcat_readonly_paths: []
 tomcat_readwrite_paths: []
+tomcat_override_template: "override.conf.j2"
+tomcat_service_user: "tomcat"
+tomcat_service_group: "tomcat"

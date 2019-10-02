@@ -1,4 +1,6 @@
 [Service]
+User={{ tomcat_service_user }}
+Group={{ tomcat_service_group }}
 {% for item in tomcat_readonly_paths %}
 ReadOnlyPaths={{ item }}
 {% endfor %}
