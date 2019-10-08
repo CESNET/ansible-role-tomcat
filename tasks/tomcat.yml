@@ -74,3 +74,6 @@
   notify:
     - "reload systemd"
     - "restart tomcat"
+
+- name: "flush handlers"
+  meta: flush_handlers
