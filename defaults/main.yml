@@ -4,3 +4,6 @@ tomcat_readwrite_paths: []
 tomcat_override_template: "override.conf.j2"
 tomcat_service_user: "tomcat"
 tomcat_service_group: "tomcat"
+tomcat_server_xml_search_list:
+  - etc/tomcat9/server.xml
+  - server.xml

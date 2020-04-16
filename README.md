@@ -17,6 +17,15 @@ Role Variables
 - tomcat_override_template - name of template for generating systemd service override file, default is "override.conf.j2"
 - tomcat_service_user - user owning the tomcat process, default is  "tomcat"
 - tomcat_service_group - group owning the tomcat process, default is "tomcat"
+- tomcat_server_xml_search_list - list of files, the first found is used to replace server.xml 
+
+server.xml file
+---------------
+
+The role searches for the file server.xml in the list defined by the variable tomcat_server_xml_search_list. 
+The default value makes it to first search for files/etc/tomcat9/server.xml on the playbook level, 
+if not found, it will use the default files/server.xml file included in this role.
+
 Example Playbook
 ----------------
 ```yaml
