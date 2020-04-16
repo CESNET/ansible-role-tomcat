@@ -21,7 +21,7 @@
 - name: "set up AJP connector in server.xml"
   copy:
     dest: /etc/tomcat9/server.xml
-    src: server.xml
+    src: etc/tomcat9/server.xml
   notify: "restart tomcat"
 
 - name: "disable session persistence across Tomcat restarts"
