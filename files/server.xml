@@ -14,8 +14,8 @@
     </GlobalNamingResources>
     <Service name="Catalina">
         <!-- Define an AJP 1.3 Connector on port 8009 listening only on localhost -->
-        <Connector port="8009" protocol="AJP/1.3" address="127.0.0.1"
-                   tomcatAuthentication="false" URIEncoding="UTF-8" packetSize="65500"/>
+        <Connector port="8009" protocol="AJP/1.3" address="127.0.0.1" secretRequired="false" allowedRequestAttributesPattern=".*"
+                   tomcatAuthentication="false" URIEncoding="UTF-8" packetSize="65536"/>
 
         <Engine name="Catalina" defaultHost="localhost">
             <Realm className="org.apache.catalina.realm.LockOutRealm">
